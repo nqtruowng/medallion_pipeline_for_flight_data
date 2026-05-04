@@ -1,5 +1,5 @@
 from pyspark import pipelines as dp
-from pyspark.sql.functions import *
+from pyspark.sql.functions import col, current_timestamp, to_date
 
 # bookings data
 rules = {
@@ -48,7 +48,7 @@ dp.create_auto_cdc_flow(
     target = 'silver_flights',
     source = 'trans_flights',
     keys = ['flight_id'],
-    sequence_by = 'flight_id',
+    sequence_by = 'modified_date',
     stored_as_scd_type = 1
 )
 
@@ -69,7 +69,7 @@ dp.create_auto_cdc_flow(
     target = 'silver_passengers',
     source = 'trans_passengers',
     keys = ['passenger_id'],
-    sequence_by = 'passenger_id',
+    sequence_by = 'modified_date',
     stored_as_scd_type = 1
 )
 
@@ -90,7 +90,7 @@ dp.create_auto_cdc_flow(
     target = 'silver_airports',
     source = 'trans_airports',
     keys = ['airport_id'],
-    sequence_by = 'airport_id',
+    sequence_by = 'modified_date',
     stored_as_scd_type = 1
 )
 
